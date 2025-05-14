@@ -4,5 +4,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src"
-  }
+  },
+  "exclude": [
+    "src/generator/template/**/*"
+  ]
 }
