@@ -14,5 +14,9 @@
     "paths": {
       "@src/*": ["../core/dist/src/*"]
     }
-  }
+  },
+  "exclude": [
+    "plugin-*/src/generator/template",
+    "plugin-*/src/generator/template/**",
+  ],
 }
