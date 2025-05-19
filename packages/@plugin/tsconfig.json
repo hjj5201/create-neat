@@ -16,7 +16,6 @@
     }
   },
   "exclude": [
-    "plugin-*/src/generator/template",
     "plugin-*/src/generator/template/**",
   ],
 }
