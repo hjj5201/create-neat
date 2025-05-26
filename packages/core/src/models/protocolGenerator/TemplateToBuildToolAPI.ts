@@ -11,7 +11,7 @@ import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI.js";
  * @param protocols 协议内容
  */
 class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
-  protected declare protocols: Record<string, object>; // todo 类型考虑优化
+  declare protected protocols: Record<string, object>; // todo 类型考虑优化
 
   constructor(protocols, props, protocol) {
     super(protocols, props, protocol);
@@ -44,7 +44,7 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
     if (content?.rules || content?.plugins) {
       const options: Options = {
         rules: content?.rules,
-        plugins: [],
+        plugins: content.plugins ? content.plugins : [],
       };
       createConfigByParseAst(this.props.preset.buildTool, options, this.props.buildToolConfigAst);
     }

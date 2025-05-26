@@ -1,7 +1,10 @@
 import { templateToBuildToolProtocol } from "../../../src/configs/protocol.js";
 import TemplateAPI from "../../../src/models/TemplateAPI.js";
+import pluginAngular from "../index.js";
 
-export default (templateAPI: TemplateAPI) => {
+const templateConfig = (templateAPI: TemplateAPI) => {
+  const buildTool = templateAPI.generator.buildTool
+  const params = pluginAngular(buildTool)
   templateAPI.extendPackage({
     dependencies: {
       react: "^18.2.0",
@@ -11,10 +14,10 @@ export default (templateAPI: TemplateAPI) => {
   });
   templateAPI.protocolGenerate({
     [templateToBuildToolProtocol.ADD_CONFIG]: {
-      params: {
-        content: 'Specil plugin',
-      },
+      params,
       priority: 1,
     },
   })
 };
+
+export default templateConfig

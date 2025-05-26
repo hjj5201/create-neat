@@ -192,13 +192,18 @@ function mergeWebpackConfigAst(options: Options, ast) {
  */
 function mergeViteConfigAst(options: Options, ast) {
   const { plugins } = options;
+  //fix: 解决多个important导致重复插入问题
+  let importInjected = false;
   if (!plugins) return;
   traverse.default(ast, {
     ImportDeclaration: (path) => {
-      plugins.forEach((plugin) => {
-        // 处理导入
-        path.container.unshift(createImportDeclaration(plugin.import.name, plugin.import.from));
-      });
+      if (!importInjected) {
+        plugins.forEach((plugin) => {
+          // 处理导入
+          path.container.unshift(createImportDeclaration(plugin.import.name, plugin.import.from));
+        });
+      }
+      importInjected = true;
     },
     enter(path) {
       // 处理配置

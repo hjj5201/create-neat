@@ -55,7 +55,14 @@ class PluginToBuildToolAPI extends ProtocolGeneratorAPI {
       vite: ({ test, compiler }) => ({
         plugins: [
           {
-            name: `vite-plugin-${compiler}`,
+            import: {
+              name: `babel`,
+              from: `vite-plugin-${compiler}`,
+            },
+            name: "babel",
+            params: {
+              babelHelpers: "bundled",
+            },
             transform: (code, id) => {
               if (id.match(test)) {
                 return require(`@${compiler}/core`).transformSync(code, {
