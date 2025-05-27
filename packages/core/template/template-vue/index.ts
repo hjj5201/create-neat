@@ -5,7 +5,18 @@ const buildToolConfigs = {
     };
   },
   vite: () => {
-    return {};
+    return {
+      content : {
+        plugins: [{
+          import: {
+            name:'vue',
+            from:'@vitejs/plugin-vue'
+          },
+          name:'vue',
+          params:{},
+        }],
+      }
+    };
   },
   // 添加其他构建工具的配置...
 };
