@@ -32,6 +32,19 @@ class PluginToBuildToolAPI extends ProtocolGeneratorAPI {
       babel: "./babel.config.js",
       swc: "./.swcrc",
     };
+    //针对所选插件如eslint，babel，分开写配置内容：
+    const viteConfig = {
+      eslint: {
+        // 可选：指定检查哪些文件
+        include: ["src/**/*.js", "src/**/*.ts", "src/**/*.vue", "src/**/*.tsx", "src/**/*.jsx"],
+        // 可选：排除 node_modules
+        exclude: ["node_modules"],
+        // 其他配置项可查官方文档
+      },
+      babel: {
+        babelHelpers: "bundled",
+      },
+    };
     // 抽离出来的构建工具配置文件，需要传入 匹配文件格式test，和编译器compiler
     const buildToolConfigGenerators = {
       webpack: ({ test, compiler }) => {
@@ -56,13 +69,11 @@ class PluginToBuildToolAPI extends ProtocolGeneratorAPI {
         plugins: [
           {
             import: {
-              name: `babel`,
+              name: `${compiler}`,
               from: `vite-plugin-${compiler}`,
             },
-            name: "babel",
-            params: {
-              babelHelpers: "bundled",
-            },
+            name: `${compiler}`,
+            params: viteConfig[compiler],
             transform: (code, id) => {
               if (id.match(test)) {
                 return require(`@${compiler}/core`).transformSync(code, {
