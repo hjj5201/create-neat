@@ -98,10 +98,20 @@ export default (generatorAPI: GeneratorAPI) => {
 
   // 生成协议配置
   generatorAPI.protocolGenerate({
-    [pluginToTemplateProtocol.ENTRY_FILE]: {
+    [pluginToTemplateProtocol.INSERT_IMPORT_PROTOCOL]: {
       params: {
-        content: "import './styles/main.scss'",
-        priority: 1,
+        imports: [
+          {
+            dir: "src/App",
+            modules: [{ name: "", from: "./index.scss" }],
+          },
+        ],
+        astOptions: {
+          parserOptions: {
+            sourceType: "module",
+            plugins: ["jsx"],
+          },
+        },
       },
     },
     [pluginToTemplateProtocol.PROCESS_STYLE_PLUGIN]: {

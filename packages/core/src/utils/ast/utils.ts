@@ -1,18 +1,18 @@
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
 import t from "@babel/types";
-import generateDefault from "@babel/generator";
+import generate from "@babel/generator";
 
 // 定义生成器函数类型
-interface GeneratorResult {
-  code: string;
-  map?: object;
-}
+// interface GeneratorResult {
+//   code: string;
+//   map?: object;
+// }
 
-type GenerateFunction = (ast: object, opts?: object, code?: string) => GeneratorResult;
+// type GenerateFunction = (ast: object, opts?: object, code?: string) => GeneratorResult;
 
 // 创建正确类型的函数引用
-const generateCode = generateDefault as unknown as GenerateFunction; // TypeScript 不允许直接从一个特定类型断言到另一个不相关的类型，但允许通过 unknown 作为中间步骤。
+// const generateCode = generate as unknown as GenerateFunction; // TypeScript 不允许直接从一个特定类型断言到另一个不相关的类型，但允许通过 unknown 作为中间步骤。
 
 /**
  * 封装AST操作的通用函数
@@ -24,9 +24,8 @@ const generateCode = generateDefault as unknown as GenerateFunction; // TypeScri
 export function transformCode(fileContent: string, operations: any, parserOptions: any) {
   // 1. 解析源代码为AST
   const ast = parse(fileContent, parserOptions);
-
   // 2. 遍历AST，应用用户定义的操作逻辑
-  traverse(ast, {
+  traverse.default(ast, {
     Program(path) {
       if (operations.Program) {
         operations.Program(path, t);
@@ -101,5 +100,5 @@ export function transformCode(fileContent: string, operations: any, parserOption
   });
 
   // 3. 生成新的代码
-  return generateCode(ast, {}, fileContent).code;
+  return generate.default(ast, {}, fileContent).code;
 }

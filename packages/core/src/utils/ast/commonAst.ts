@@ -12,9 +12,17 @@ import {
  * 创建default import ast
  * @param name default导出的名
  * @param import from 来源
- */
-export const createImportDeclaration = (name: string, from: string) =>
-  importDeclaration([importDefaultSpecifier(identifier(name))], stringLiteral(from));
+//  */
+// export const createImportDeclaration = (name: string, from: string) =>
+//   importDeclaration([importDefaultSpecifier(identifier(name))], stringLiteral(from));
+export const createImportDeclaration = (name: string, from: string) => {
+  if (!name) {
+    // 只导入模块，不绑定变量
+    return importDeclaration([], stringLiteral(from));
+  }
+  // 默认导入
+  return importDeclaration([importDefaultSpecifier(identifier(name))], stringLiteral(from));
+};
 
 /**
  * 创建新建对象语法ast

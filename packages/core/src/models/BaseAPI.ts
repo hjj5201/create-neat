@@ -71,7 +71,10 @@ class BaseAPI {
         // new SnapshotableTemplateToBuildToolAPI(protocols, props, protocol);
         api = new TemplateToBuildToolAPI(protocols, props, protocol);
       }
-      api.generator();
+      // api.generator();
+      if (typeof api[protocol] === "function") {
+        api[protocol](protocols[protocol]);
+      }
     }
   }
 
