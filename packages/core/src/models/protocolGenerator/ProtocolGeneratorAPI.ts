@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 import { ProtocolProps } from "../BaseAPI.js";
 import { getTargetFileData, replaceDynamicSlot } from "../../utils/commonUtils.js";
@@ -10,6 +11,8 @@ import {
 import { transformCode } from "../../utils/ast/utils.js";
 import { FileData } from "../FileTree.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 /**
  * 通用类，为 插件/框架/构建工具 之间的影响定义协议处理器
  * @param protocols 协议内容
@@ -33,15 +36,19 @@ class ProtocolGeneratorAPI {
 
   ENTRY_FILE(params) {
     // todo: 路径可能存在问题
-    const srcDir = path.resolve(import.meta.dirname, "src"); // src 目录路径
+    const appJsxPath = path.resolve(
+      __dirname, // 当前目录
+      "../../../template/template-react/generator/template/",
+    );
+    const srcDir = path.resolve(appJsxPath, "src"); // src 目录路径
     const content = params.content;
 
     // 处理入口文件
     if (content) {
-      const entryFilePath = path.join(srcDir, "index.js"); // 假设入口文件为 index.js
+      const entryFilePath = path.join(srcDir, "App.jsx"); // 假设入口文件为 index.js
       let entryContent = fs.readFileSync(entryFilePath, "utf-8");
 
-      entryContent += content;
+      entryContent = content + entryContent;
 
       // 文件重写，实现插入
       // todo: 具体如何实现，其实很灵活，甚至可以借助 AST 进行
