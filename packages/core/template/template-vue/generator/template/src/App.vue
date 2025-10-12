@@ -69,6 +69,6 @@ export default {
 };
 </script>
 
-<style scoped>
-@import "./index.css";
+<style lang="<%= TemplateEjs.env.cssType %>" scoped>
+@import "./index.<%= TemplateEjs.env.cssType %>";
 </style>

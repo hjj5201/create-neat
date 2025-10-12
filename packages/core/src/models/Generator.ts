@@ -198,6 +198,18 @@ class Generator {
     }
   }
 
+  // 获取css类型
+  // 主要用于在生成模板时，判断用户选择的css预处理器类型
+  getCssType() {
+    let cssType = "css"; //默认css
+    if (this.preset.plugins["scss"]) {
+      cssType = "scss";
+    } else if (this.preset.plugins["less"]) {
+      cssType = "less";
+    }
+    return cssType;
+  }
+
   // 单独处理一个插件相关文件
   async pluginGenerate(pluginName: string) {
     /** @todo TS 插件路径适配 完成后删除 */
@@ -228,8 +240,7 @@ class Generator {
   // 单独处理一个框架相关依赖，主要是将框架相关的依赖包插入到pkg内，以及将需要的构建工具配置合并到构建工具模板中
   async templateGenerate() {
     const templatePath = `packages/core/dist/template/template-${this.templateName}/generator/index.js`;
-    const pluginGeneratorModule = await this.loadBase(templatePath, "");
-    const templateGenerator = getDefaultExport(pluginGeneratorModule);
+    const templateGenerator = getDefaultExport(await this.loadBase(templatePath, ""));
 
     if (templateGenerator && typeof templateGenerator === "function") {
       // 将框架需要的依赖加入到package.json中
@@ -297,16 +308,20 @@ class Generator {
         name: `template-${this.templateName}`,
         version: "0.1.0",
       },
-      VueEjs: {
-        name: "vue_test",
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        usePinia: !!this.preset.plugins["pinia"],
-      },
-      ReactEjs: {
-        useReactRouter: !!this.preset.plugins["react-router"],
+      TemplateEjs: {
+        vue: {
+          name: "vue_test",
+          data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          usePinia: !!this.preset.plugins["pinia"],
+        },
+        react: {
+          useReactRouter: !!this.preset.plugins["react-router"],
+        },
+        env: {
+          cssType: this.getCssType(),
+        },
       },
     };
-
     this.files.addToTreeByTemplateDirPathAndEjs(templatePath, this.rootDirectory, options);
 
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
@@ -322,8 +337,12 @@ class Generator {
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
     const buildConfigFinalContent = generator.default(this.buildToolConfigAst).code;
-    // 将构建工具配置文件也添加到根文件树对象中
-    const buildToolConfigName = `${this.buildTool}.config.js`;
+
+    // 根据是否是TypeScript项目决定配置文件扩展名
+    const isTypeScript = process.env.isTs === "true";
+    const fileExtension = isTypeScript ? "ts" : "js";
+    const buildToolConfigName = `${this.buildTool}.config.${fileExtension}`;
+
     this.files.addToTreeByFile(buildToolConfigName, buildConfigFinalContent);
 
     // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
