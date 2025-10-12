@@ -32,11 +32,7 @@
       "autoAttachChildProcesses": true,
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
-      "args": [
-        "run", 
-        "packages/core/src/__tests__/utils/formatCode.test.ts", 
-        "--reporter=verbose"
-      ],
+      "args": ["run", "packages/core/src/__tests__/utils/formatCode.test.ts", "--reporter=verbose"],
       "smartStep": true,
       "console": "integratedTerminal"
     },
@@ -49,8 +45,8 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": [
-        "run", 
-        "packages/core/src/__tests__/utils/checkVersion.test.ts", 
+        "run",
+        "packages/core/src/__tests__/utils/checkVersion.test.ts",
         "--reporter=verbose"
       ],
       "smartStep": true,
@@ -65,8 +61,8 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": [
-        "run", 
-        "packages/core/src/__tests__/utils/createSuccessInfo.test.ts", 
+        "run",
+        "packages/core/src/__tests__/utils/createSuccessInfo.test.ts",
         "--reporter=verbose"
       ],
       "smartStep": true,
@@ -81,8 +77,8 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": [
-        "run", 
-        "packages/core/src/__tests__/utils/getNpmSource.test.ts", 
+        "run",
+        "packages/core/src/__tests__/utils/getNpmSource.test.ts",
         "--reporter=verbose"
       ],
       "smartStep": true,
@@ -97,8 +93,8 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": [
-        "run", 
-        "packages/core/src/__tests__/utils/dependenciesInstall.test.ts", 
+        "run",
+        "packages/core/src/__tests__/utils/dependenciesInstall.test.ts",
         "--reporter=verbose"
       ],
       "smartStep": true,
@@ -113,8 +109,8 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": [
-        "run", 
-        "packages/core/src/__tests__/utils/commonUtils.test.ts", 
+        "run",
+        "packages/core/src/__tests__/utils/commonUtils.test.ts",
         "--reporter=verbose"
       ],
       "smartStep": true,

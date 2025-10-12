@@ -15,7 +15,5 @@
       "@src/*": ["../core/dist/src/*"]
     }
   },
-  "exclude": [
-    "plugin-*/src/generator/template/**",
-  ],
+  "exclude": ["plugin-*/src/generator/template/**"]
 }

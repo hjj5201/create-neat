@@ -12,8 +12,6 @@ import generate from "@babel/generator";
 // 提取 t 的类型
 type BabelTypes = typeof t;
 
-
-
 // 定义 operations 类型
 type Operations = {
   Program?: (path: NodePath<t.Program>, t: BabelTypes) => void;
@@ -37,8 +35,6 @@ type PluginConfig = ParserPlugin;
 type ParserOptions = {
   plugins: PluginConfig[];
 };
-
-
 
 //正确的 traverse 使用方法
 const traverse = _traverse.default;
