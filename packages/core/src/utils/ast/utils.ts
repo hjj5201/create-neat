@@ -12,7 +12,7 @@ import generate from "@babel/generator";
 // 提取 t 的类型
 type BabelTypes = typeof t;
 
-type GenerateFunction = (ast: object, opts?: object, code?: string) => GeneratorResult;
+
 
 // 定义 operations 类型
 type Operations = {
@@ -38,8 +38,7 @@ type ParserOptions = {
   plugins: PluginConfig[];
 };
 
-// 创建正确类型的函数引用
-const generateCode = generateDefault.default as unknown as GenerateFunction; // TypeScript 不允许直接从一个特定类型断言到另一个不相关的类型，但允许通过 unknown 作为中间步骤。
+
 
 //正确的 traverse 使用方法
 const traverse = _traverse.default;
